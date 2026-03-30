@@ -1,0 +1,7 @@
+{
+  "name": "Groupe Ugur Cicek - Investissement Immobilier",
+  "description": "Expertise en investissement, gestion et rénovation immobilière depuis 1994.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
