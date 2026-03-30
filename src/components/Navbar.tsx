@@ -90,7 +90,7 @@ export default function Navbar() {
               <div className="pt-4 border-t border-black/5 flex flex-col space-y-4">
                 <div className="flex items-center space-x-3 text-sm text-gray-500">
                   <Phone size={16} />
-                  <span> 84 53 15 56 </span>
+                  <span>+336 84 53 15 56 </span>
                 </div>
                 <div className="flex items-center space-x-3 text-sm text-gray-500">
                   <Mail size={16} />
