@@ -1,5 +1,6 @@
 import { motion } from "motion/react";
 import { ArrowRight } from "lucide-react";
+import slide from "../assets/slide.avif";
 
 export default function Hero() {
   return (
@@ -7,8 +8,8 @@ export default function Hero() {
       {/* Background Image */}
       <div className="absolute inset-0">
         <img
-          src="/src/assets/slide.avif" 
-          alt="Modern Architecture"
+         src={slide} 
+         alt="slide"
           className="w-full h-full object-cover"
           referrerPolicy="no-referrer"
         />

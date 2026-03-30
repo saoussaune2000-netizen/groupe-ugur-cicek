@@ -1,5 +1,6 @@
 import { motion } from "motion/react";
 import { Utensils, ExternalLink } from "lucide-react";
+import restau from "../assets/restaurant.avif";
 
 export default function Diversification() {
   return (
@@ -43,7 +44,7 @@ export default function Diversification() {
             
             <div className="relative h-[400px] lg:h-auto">
               <img
-                src="/src/assets/resstaurant.avif"
+                src={restau}
                 alt="Restaurant Le Cyrano"
                 className="w-full h-full object-cover"
                 referrerPolicy="no-referrer"
