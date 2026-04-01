@@ -1,7 +1,30 @@
 import { motion } from "motion/react";
 import { Phone, Mail, MapPin, Send } from "lucide-react";
+import emailjs from "@emailjs/browser";
+import { useRef , useState} from "react";
+import toast from "react-hot-toast";
 
 export default function Contact() {
+  const formRef = useRef();
+  const [status, setStatus] = useState("");
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    emailjs
+      .sendForm(
+        "service_mkzebam",
+        "template_juxo8py",
+        formRef.current,
+        "J7vkCUcEw-UXKpWz4",
+      )
+      .then(() => {
+        toast.success("Message envoyé avec succès !");
+      })
+      .catch(() => {
+        toast.error("Erreur lors de l'envoi");
+      });
+  };
+
   return (
     <section id="contact" className="section-padding bg-surface">
       <div className="max-w-7xl mx-auto">
@@ -68,7 +91,7 @@ export default function Contact() {
 
             {/* Map Placeholder */}
             <div className="h-64 rounded-2xl overflow-hidden border border-black/5 shadow-lg">
-            <iframe
+              <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2636.680491643802!2d7.712527175354586!3d48.63509586639605!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4796b80ef71c840d%3A0x40b684388f0ce948!2s4%20Rue%20Vauban%2C%2067450%20Mundolsheim!5e0!3m2!1sfr!2sfr!4v1773529127969!5m2!1sfr!2sfr"
                 width="100%"
                 height="100%"
@@ -83,8 +106,9 @@ export default function Contact() {
           {/* Form Side */}
           <div className="lg:col-span-7">
             <form
+              ref={formRef}
               className="premium-card h-full"
-              onSubmit={(e) => e.preventDefault()}
+              onSubmit={sendEmail}
             >
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                 <div className="space-y-2">
@@ -92,8 +116,9 @@ export default function Contact() {
                     Nom complet
                   </label>
                   <input
+                    name="name"
                     type="text"
-                    placeholder="Jean Dupont"
+                    placeholder="Nom complet"
                     className="w-full bg-surface border border-black/5 rounded-xl px-4 py-3 focus:outline-none focus:border-accent transition-colors"
                   />
                 </div>
@@ -102,8 +127,9 @@ export default function Contact() {
                     Email
                   </label>
                   <input
+                    name="email"
                     type="email"
-                    placeholder="jean@exemple.com"
+                    placeholder="exemple@email.com"
                     className="w-full bg-surface border border-black/5 rounded-xl px-4 py-3 focus:outline-none focus:border-accent transition-colors"
                   />
                 </div>
@@ -113,7 +139,10 @@ export default function Contact() {
                 <label className="text-xs uppercase tracking-widest font-semibold text-gray-500">
                   Sujet
                 </label>
-                <select className="w-full bg-surface border border-black/5 rounded-xl px-4 py-3 focus:outline-none focus:border-accent transition-colors appearance-none">
+                <select
+                  name="subject"
+                  className="w-full bg-surface border border-black/5 rounded-xl px-4 py-3 focus:outline-none focus:border-accent transition-colors appearance-none"
+                >
                   <option>Investissement immobilier</option>
                   <option>Gestion de biens</option>
                   <option>Rénovation</option>
@@ -126,6 +155,7 @@ export default function Contact() {
                   Message
                 </label>
                 <textarea
+                  name="message"
                   rows={5}
                   placeholder="Décrivez votre projet..."
                   className="w-full bg-surface border border-black/5 rounded-xl px-4 py-3 focus:outline-none focus:border-accent transition-colors resize-none"
@@ -140,6 +170,7 @@ export default function Contact() {
                 Envoyer le message
                 <Send size={18} />
               </motion.button>
+              
             </form>
           </div>
         </div>
