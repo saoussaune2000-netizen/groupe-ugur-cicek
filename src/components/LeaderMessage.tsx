@@ -1,6 +1,6 @@
 import { motion } from "motion/react";
 import { Quote } from "lucide-react";
-import cicek from "../assets/cicek.jpg"; // <-- attention au nom et à l'extension
+import cicek from "../assets/cicek.jpg"; 
 export default function LeaderMessage() {
   return (
     <section className="section-padding bg-primary text-white overflow-hidden relative">

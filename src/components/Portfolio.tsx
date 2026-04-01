@@ -7,7 +7,7 @@ const projects = [
   {
     id: 1,
     title: "Résidentiel Haut de Gamme",
-    location: "Paris & Île-de-France",
+    location: "Strasbourg",
     image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070&auto=format&fit=crop",
     gallery: [
       "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070&auto=format&fit=crop",
