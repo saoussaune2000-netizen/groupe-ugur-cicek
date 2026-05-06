@@ -1,7 +1,7 @@
 import { motion } from "motion/react";
 import { Phone, Mail, MapPin, Send } from "lucide-react";
 import emailjs from "@emailjs/browser";
-import { useRef , useState} from "react";
+import { useRef, useState } from "react";
 import toast from "react-hot-toast";
 
 export default function Contact() {
@@ -35,7 +35,7 @@ export default function Contact() {
           <h2 className="text-4xl md:text-5xl font-serif mb-6">
             Parlons de <span className="italic">votre projet</span>
           </h2>
-          <p className="text-gray-500 max-w-2xl mx-auto">
+          <p className="text-gray-700 max-w-2xl mx-auto">
             Nos experts sont à votre disposition pour étudier vos opportunités
             d'investissement et vous accompagner dans votre stratégie
             immobilière.
@@ -53,7 +53,7 @@ export default function Contact() {
                     <Phone className="text-accent" size={20} />
                   </div>
                   <div>
-                    <p className="text-sm text-gray-400 uppercase tracking-wider mb-1">
+                    <p className="text-sm text-gray-600 uppercase tracking-wider mb-1">
                       Téléphone
                     </p>
                     <p className="text-lg font-medium">+336 84 53 15 56</p>
@@ -65,7 +65,7 @@ export default function Contact() {
                     <Mail className="text-accent" size={20} />
                   </div>
                   <div>
-                    <p className="text-sm text-gray-400 uppercase tracking-wider mb-1">
+                    <p className="text-sm text-gray-600 uppercase tracking-wider mb-1">
                       Email
                     </p>
                     <p className="text-lg font-medium">contact@ugurcicek.fr</p>
@@ -77,7 +77,7 @@ export default function Contact() {
                     <MapPin className="text-accent" size={20} />
                   </div>
                   <div>
-                    <p className="text-sm text-gray-400 uppercase tracking-wider mb-1">
+                    <p className="text-sm text-gray-600 uppercase tracking-wider mb-1">
                       Adresse
                     </p>
                     <p className="text-lg font-medium">
@@ -92,13 +92,14 @@ export default function Contact() {
             {/* Map Placeholder */}
             <div className="h-64 rounded-2xl overflow-hidden border border-black/5 shadow-lg">
               <iframe
+                title="Localisation du siège social - 4 Rue Vauban, Mundolsheim"
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2636.680491643802!2d7.712527175354586!3d48.63509586639605!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4796b80ef71c840d%3A0x40b684388f0ce948!2s4%20Rue%20Vauban%2C%2067450%20Mundolsheim!5e0!3m2!1sfr!2sfr!4v1773529127969!5m2!1sfr!2sfr"
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}
-                allowFullScreen={true} // ✅ ici il faut mettre {true} en JSX
+                allowFullScreen={true}
                 loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade" // ✅ camelCase est correct
+                referrerPolicy="no-referrer-when-downgrade"
               ></iframe>
             </div>
           </div>
@@ -112,7 +113,7 @@ export default function Contact() {
             >
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                 <div className="space-y-2">
-                  <label className="text-xs uppercase tracking-widest font-semibold text-gray-500">
+                  <label className="text-xs uppercase tracking-widest font-semibold text-gray-700">
                     Nom complet
                   </label>
                   <input
@@ -123,7 +124,7 @@ export default function Contact() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-xs uppercase tracking-widest font-semibold text-gray-500">
+                  <label className="text-xs uppercase tracking-widest font-semibold text-gray-700">
                     Email
                   </label>
                   <input
@@ -134,12 +135,15 @@ export default function Contact() {
                   />
                 </div>
               </div>
-
               <div className="space-y-2 mb-6">
-                <label className="text-xs uppercase tracking-widest font-semibold text-gray-500">
+                <label
+                  htmlFor="subject"
+                  className="text-xs uppercase tracking-widest font-semibold text-gray-700"
+                >
                   Sujet
                 </label>
                 <select
+                  id="subject"
                   name="subject"
                   className="w-full bg-surface border border-black/5 rounded-xl px-4 py-3 focus:outline-none focus:border-accent transition-colors appearance-none"
                 >
@@ -149,9 +153,8 @@ export default function Contact() {
                   <option>Autre demande</option>
                 </select>
               </div>
-
               <div className="space-y-2 mb-8">
-                <label className="text-xs uppercase tracking-widest font-semibold text-gray-500">
+                <label className="text-xs uppercase tracking-widest font-semibold text-gray-700">
                   Message
                 </label>
                 <textarea
@@ -161,16 +164,18 @@ export default function Contact() {
                   className="w-full bg-surface border border-black/5 rounded-xl px-4 py-3 focus:outline-none focus:border-accent transition-colors resize-none"
                 ></textarea>
               </div>
-
               <motion.button
+                type="submit"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="w-full bg-primary text-white py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-primary/90 transition-all"
+                className="w-full bg-primary text-white py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-accent transition-all duration-300 group"
               >
                 Envoyer le message
-                <Send size={18} />
+                <Send
+                  size={18}
+                  className="group-hover:translate-x-1 transition-transform"
+                />
               </motion.button>
-              
             </form>
           </div>
         </div>

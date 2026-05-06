@@ -1,7 +1,6 @@
 import { motion, AnimatePresence } from "motion/react";
 import { Menu, X, Phone, Mail } from "lucide-react";
 import { useState, useEffect } from "react";
-import logo from "../assets/logo.png";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,21 +21,35 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? "glass-nav py-4" : "bg-transparent py-6"}`}>
+    <nav
+      id="main-navbar"
+      className={`fixed w-full z-50 transition-all duration-500 ${
+        scrolled
+          ? "bg-white/95 backdrop-blur-md shadow-sm py-3 border-b border-black/5"
+          : "bg-transparent py-5"
+      }`}
+    >
+      {" "}
       <div className="max-w-7xl mx-auto px-6 md:px-12 flex justify-between items-center">
-      <div className="flex items-center gap-3">
-
-      <img src={logo} alt="Logo" className="w-12 h-12 object-contain" />
-        <div className="flex flex-col">
-          <span className={`text-xl font-serif font-bold tracking-wider ${scrolled ? "text-primary" : "text-white"}`}>
-            UGUR CICEK
-          </span>
-          <span className={`text-[10px] uppercase tracking-[0.3em] ${scrolled ? "text-accent" : "text-accent/80"}`}>
-            GROUPE IMMOBILIER
-          </span>
+        <div className="flex items-center gap-3">
+          <img
+            src="/assets/logo.png"
+            alt="Logo"
+            className="w-12 h-12 object-contain"
+          />
+          <div className="flex flex-col">
+            <span
+              className={`text-xl font-serif font-bold tracking-wider ${scrolled ? "text-primary" : "text-white"}`}
+            >
+              UGUR CICEK
+            </span>
+            <span
+              className={`text-[10px] uppercase tracking-[0.3em] ${scrolled ? "text-accent" : "text-accent/80"}`}
+            >
+              GROUPE IMMOBILIER
+            </span>
+          </div>
         </div>
-        </div>
-
 
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center space-x-8">
@@ -51,7 +64,7 @@ export default function Navbar() {
           ))}
           <a
             href="#contact"
-            className="bg-accent text-white px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-accent/90 transition-all"
+            className="bg-accent hover:bg-accent-dark text-white px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-accent/90 transition-all"
           >
             Nous contacter
           </a>
@@ -66,7 +79,6 @@ export default function Navbar() {
           )}
         </button>
       </div>
-
       {/* Mobile Menu */}
       <AnimatePresence>
         {isOpen && (
@@ -88,11 +100,11 @@ export default function Navbar() {
                 </a>
               ))}
               <div className="pt-4 border-t border-black/5 flex flex-col space-y-4">
-                <div className="flex items-center space-x-3 text-sm text-gray-500">
+                <div className="flex items-center space-x-3 text-sm text-gray-700">
                   <Phone size={16} />
                   <span>+336 84 53 15 56 </span>
                 </div>
-                <div className="flex items-center space-x-3 text-sm text-gray-500">
+                <div className="flex items-center space-x-3 text-sm text-gray-700">
                   <Mail size={16} />
                   <span>contact@ugurcicek.fr</span>
                 </div>

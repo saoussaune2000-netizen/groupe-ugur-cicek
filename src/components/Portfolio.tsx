@@ -1,72 +1,77 @@
 import { motion, AnimatePresence } from "motion/react";
 import { useState } from "react";
 import type { MouseEvent } from "react";
-import { X, ChevronLeft, ChevronRight, MapPin, Calendar, Building2 } from "lucide-react";
+import {
+  X,
+  ChevronLeft,
+  ChevronRight,
+  MapPin,
+  Calendar,
+  Building2,
+} from "lucide-react";
 
 const projects = [
   {
     id: 1,
     title: "Résidentiel Haut de Gamme",
     location: "Strasbourg",
-    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070&auto=format&fit=crop",
-    gallery: [
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1600566753190-17f0bb2a6cbe?q=80&w=2070&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1600573472591-ee6b68d14c68?q=80&w=2070&auto=format&fit=crop"
-    ],
+    src: "/assets/home1.avif",
+    gallery: ["/assets/home1.avif", "/assets/home11.avif"],
     type: "Résidentiel",
     year: "2023",
-    description: "Réhabilitation complète d'un immeuble haussmannien en appartements de luxe. Ce projet a nécessité une expertise particulière en conservation du patrimoine tout en intégrant des technologies modernes de domotique et d'efficacité énergétique.",
+    description:
+      "Réhabilitation complète d'un immeuble haussmannien en appartements de luxe. Ce projet a nécessité une expertise particulière en conservation du patrimoine tout en intégrant des technologies modernes de domotique et d'efficacité énergétique.",
   },
   {
     id: 2,
     title: "Complexes de Bureaux",
     location: "Secteurs Tertiaires",
-    image: "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2069&auto=format&fit=crop",
+    image: "/assets/home2.avif",
     gallery: [
-      "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2069&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1497366811353-6870744d04b2?q=80&w=2069&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1431540015161-0bf868a2d407?q=80&w=2070&auto=format&fit=crop"
+      "/assets/home2.avif",
+      "/assets/home21.avif",
+      "/assets/home22.avif",
     ],
     type: "Commercial",
     year: "2022",
-    description: "Développement d'un pôle tertiaire innovant axé sur le bien-être au travail. Espaces modulables, jardins suspendus et certification BREEAM Excellent. Un investissement stratégique répondant aux nouveaux besoins des entreprises post-pandémie.",
+    description:
+      "Développement d'un pôle tertiaire innovant axé sur le bien-être au travail. Espaces modulables, jardins suspendus et certification BREEAM Excellent. Un investissement stratégique répondant aux nouveaux besoins des entreprises post-pandémie.",
   },
   {
     id: 3,
     title: "Rénovations Historiques",
     location: "Centres-Villes",
-    image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2070&auto=format&fit=crop",
-    gallery: [
-      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2070&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1512918766775-d56a17700772?q=80&w=2070&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1512915922686-57c11dde9b6b?q=80&w=2070&auto=format&fit=crop"
-    ],
+    image: "/assets/home3.avif",
+    gallery: ["/assets/home3.avif", "/assets/home31.avif"],
     type: "Rénovation",
     year: "2021",
-    description: "Restauration d'un ancien hôtel particulier. Nous avons redonné vie à des éléments architecturaux d'époque tout en créant des espaces de vie contemporains et raffinés. Un projet emblématique de notre savoir-faire en rénovation d'exception.",
+    description:
+      "Restauration d'un ancien hôtel particulier. Nous avons redonné vie à des éléments architecturaux d'époque tout en créant des espaces de vie contemporains et raffinés. Un projet emblématique de notre savoir-faire en rénovation d'exception.",
   },
   {
     id: 4,
     title: "Locaux Commerciaux",
     location: "Zones Dynamiques",
-    image: "https://images.unsplash.com/photo-1556761175-b413da4baf72?q=80&w=1974&auto=format&fit=crop",
+    image: "/assets/home4.avif",
     gallery: [
-      "https://images.unsplash.com/photo-1556761175-b413da4baf72?q=80&w=1974&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=1974&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=2070&auto=format&fit=crop"
+      "/assets/home4.avif",
+      "/assets/home41.avif",
+      "/assets/home42.avif",
     ],
     type: "Bureaux",
     year: "2024",
-    description: "Optimisation et gestion d'un portefeuille de locaux commerciaux en centre-ville. Notre approche combine analyse de flux, sélection rigoureuse des enseignes et valorisation technique des surfaces pour garantir un rendement pérenne.",
+    description:
+      "Optimisation et gestion d'un portefeuille de locaux commerciaux en centre-ville. Notre approche combine analyse de flux, sélection rigoureuse des enseignes et valorisation technique des surfaces pour garantir un rendement pérenne.",
   },
 ];
 
 export default function Portfolio() {
-  const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null);
+  const [selectedProject, setSelectedProject] = useState<
+    (typeof projects)[0] | null
+  >(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  const openModal = (project: typeof projects[0]) => {
+  const openModal = (project: (typeof projects)[0]) => {
     setSelectedProject(project);
     setCurrentImageIndex(0);
     document.body.style.overflow = "hidden";
@@ -80,14 +85,20 @@ export default function Portfolio() {
   const nextImage = (e: MouseEvent) => {
     e.stopPropagation();
     if (selectedProject) {
-      setCurrentImageIndex((prev) => (prev + 1) % selectedProject.gallery.length);
+      setCurrentImageIndex(
+        (prev) => (prev + 1) % selectedProject.gallery.length,
+      );
     }
   };
 
   const prevImage = (e: MouseEvent) => {
     e.stopPropagation();
     if (selectedProject) {
-      setCurrentImageIndex((prev) => (prev - 1 + selectedProject.gallery.length) % selectedProject.gallery.length);
+      setCurrentImageIndex(
+        (prev) =>
+          (prev - 1 + selectedProject.gallery.length) %
+          selectedProject.gallery.length,
+      );
     }
   };
 
@@ -101,11 +112,13 @@ export default function Portfolio() {
             </span>
             <h2 className="text-4xl md:text-5xl font-serif leading-tight">
               Nos projets et <br />
-              <span className="text-accent italic">opportunités</span> d'investissement
+              <span className="text-accent italic">opportunités</span>{" "}
+              d'investissement
             </h2>
           </div>
-          <p className="text-gray-500 max-w-sm">
-            Découvrez une sélection de nos réalisations et les types de biens sur lesquels nous intervenons régulièrement.
+          <p className="text-gray-700 max-w-sm">
+            Découvrez une sélection de nos réalisations et les types de biens
+            sur lesquels nous intervenons régulièrement.
           </p>
         </div>
 
@@ -127,12 +140,14 @@ export default function Portfolio() {
                 referrerPolicy="no-referrer"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 transition-opacity group-hover:opacity-80" />
-              
+
               <div className="absolute bottom-0 left-0 p-8 w-full">
-                <span className="text-accent text-xs font-semibold uppercase tracking-widest mb-2 block">
+                <span className="text-accent text-sm font-semibold uppercase tracking-widest mb-2 block">
                   {project.type}
                 </span>
-                <h3 className="text-2xl font-serif text-white mb-1">{project.title}</h3>
+                <h3 className="text-2xl font-serif text-white mb-1">
+                  {project.title}
+                </h3>
                 <p className="text-white/60 text-sm">{project.location}</p>
               </div>
             </motion.div>
@@ -166,7 +181,7 @@ export default function Portfolio() {
                   className="w-full h-full object-cover"
                   referrerPolicy="no-referrer"
                 />
-                
+
                 {/* Navigation Arrows */}
                 <button
                   onClick={prevImage}
@@ -196,10 +211,12 @@ export default function Portfolio() {
               <div className="lg:w-1/3 p-8 lg:p-12 overflow-y-auto flex flex-col">
                 <div className="flex justify-between items-start mb-8">
                   <div>
-                    <span className="text-accent text-xs font-semibold uppercase tracking-widest mb-2 block">
+                    <span className="text-accent text-sm font-semibold uppercase tracking-widest mb-2 block">
                       {selectedProject.type}
                     </span>
-                    <h2 className="text-3xl font-serif font-bold text-primary">{selectedProject.title}</h2>
+                    <h2 className="text-3xl font-serif font-bold text-primary">
+                      {selectedProject.title}
+                    </h2>
                   </div>
                   <button
                     onClick={closeModal}
@@ -210,22 +227,28 @@ export default function Portfolio() {
                 </div>
 
                 <div className="space-y-6 mb-10">
-                  <div className="flex items-center gap-4 text-gray-500">
+                  <div className="flex items-center gap-4 text-gray-700">
                     <MapPin size={20} className="text-accent" />
                     <span className="text-sm">{selectedProject.location}</span>
                   </div>
-                  <div className="flex items-center gap-4 text-gray-500">
+                  <div className="flex items-center gap-4 text-gray-700">
                     <Calendar size={20} className="text-accent" />
-                    <span className="text-sm">Réalisation : {selectedProject.year}</span>
+                    <span className="text-sm">
+                      Réalisation : {selectedProject.year}
+                    </span>
                   </div>
-                  <div className="flex items-center gap-4 text-gray-500">
+                  <div className="flex items-center gap-4 text-gray-700">
                     <Building2 size={20} className="text-accent" />
-                    <span className="text-sm">Type : {selectedProject.type}</span>
+                    <span className="text-sm">
+                      Type : {selectedProject.type}
+                    </span>
                   </div>
                 </div>
 
                 <div className="prose prose-slate prose-sm max-w-none">
-                  <h4 className="text-primary font-serif font-bold mb-4">Description du projet</h4>
+                  <h4 className="text-primary font-serif font-bold mb-4">
+                    Description du projet
+                  </h4>
                   <p className="text-gray-600 leading-relaxed">
                     {selectedProject.description}
                   </p>
@@ -237,7 +260,7 @@ export default function Portfolio() {
                       closeModal();
                       window.location.href = "#contact";
                     }}
-                    className="w-full bg-accent text-white py-4 rounded-xl font-bold hover:bg-accent/90 transition-all"
+                    className="w-full bg-accent hover:bg-accent-dark text-white py-4 rounded-xl font-bold hover:bg-accent/90 transition-all"
                   >
                     Investir dans un projet similaire
                   </button>
