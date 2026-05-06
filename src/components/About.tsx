@@ -66,7 +66,6 @@ export default function About() {
             transition={{ duration: 0.8 }}
             className="relative mt-4 lg:mt-0"
           >
-            {/* Image réduite sur mobile pour éviter qu'elle prenne trop de place */}
             <div className="aspect-[4/3] md:aspect-[4/4] lg:aspect-[4/5] rounded-2xl overflow-hidden shadow-2xl">
               <img
                 src="/assets/home.avif"
@@ -75,7 +74,6 @@ export default function About() {
                 referrerPolicy="no-referrer"
               />
             </div>
-            {/* Citation visible uniquement à partir de md */}
             <div className="absolute -bottom-6 -left-4 md:-left-6 bg-accent p-5 md:p-8 rounded-2xl hidden md:block max-w-xs">
               <p className="text-white font-serif text-base md:text-xl italic">
                 "L'immobilier est une question de vision et de confiance."

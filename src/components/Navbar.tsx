@@ -51,7 +51,6 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* Desktop Nav */}
         <div className="hidden md:flex items-center space-x-8">
           {navLinks.map((link) => (
             <a
@@ -70,7 +69,6 @@ export default function Navbar() {
           </a>
         </div>
 
-        {/* Mobile Toggle */}
         <button className="md:hidden" onClick={() => setIsOpen(!isOpen)}>
           {isOpen ? (
             <X className={scrolled ? "text-primary" : "text-white"} />
@@ -79,7 +77,6 @@ export default function Navbar() {
           )}
         </button>
       </div>
-      {/* Mobile Menu */}
       <AnimatePresence>
         {isOpen && (
           <motion.div

@@ -139,7 +139,6 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Navigation */}
           <div>
             <h4 className="text-lg font-serif mb-6">Navigation</h4>
             <ul className="space-y-4 text-white/60 text-sm">
@@ -183,7 +182,6 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Services */}
           <div>
             <h4 className="text-lg font-serif mb-6">Expertises</h4>
             <ul className="space-y-4 text-white/60 text-sm">
@@ -195,7 +193,6 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Newsletter/Contact */}
           <div>
             <h4 className="text-lg font-serif mb-6">Siège Social</h4>
             <p className="text-white/60 text-sm mb-4">

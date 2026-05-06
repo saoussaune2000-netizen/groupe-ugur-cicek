@@ -89,7 +89,6 @@ export default function Contact() {
               </div>
             </div>
 
-            {/* Map Placeholder */}
             <div className="h-64 rounded-2xl overflow-hidden border border-black/5 shadow-lg">
               <iframe
                 title="Localisation du siège social - 4 Rue Vauban, Mundolsheim"
@@ -104,7 +103,6 @@ export default function Contact() {
             </div>
           </div>
 
-          {/* Form Side */}
           <div className="lg:col-span-7">
             <form
               ref={formRef}

@@ -22,7 +22,6 @@ export default function Hero() {
         <div className="absolute inset-0 bg-black/55" />
       </div>
 
-      {/* Clé du fix : padding-top = hauteur navbar, puis flex center dans l'espace restant */}
       <div
         className="relative h-full flex flex-col justify-center items-center px-5 md:px-12 pt-16 md:pt-0"
         style={{ paddingTop: `${navHeight}px` }}

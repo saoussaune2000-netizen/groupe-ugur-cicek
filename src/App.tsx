@@ -5,7 +5,6 @@ import Footer from "./components/Footer";
 import { motion } from "motion/react";
 import { Toaster } from "react-hot-toast";
 
-// Lazy components
 const About = lazy(() => import("./components/About"));
 const Services = lazy(() => import("./components/Services"));
 const Portfolio = lazy(() => import("./components/Portfolio"));

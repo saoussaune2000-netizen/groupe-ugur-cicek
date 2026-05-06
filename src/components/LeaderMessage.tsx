@@ -15,7 +15,6 @@ export default function LeaderMessage() {
             transition={{ duration: 0.8 }}
             className="lg:col-span-5"
           >
-            {/* Portrait plus compact sur mobile */}
             <div className="aspect-[3/4] sm:aspect-[4/4] lg:aspect-[3/4] rounded-2xl overflow-hidden border-4 border-accent/20 max-w-xs sm:max-w-sm mx-auto lg:max-w-none">
               <img
                 src="/assets/cicek.jpg"

@@ -155,7 +155,6 @@ export default function Portfolio() {
         </div>
       </div>
 
-      {/* Project Modal */}
       <AnimatePresence>
         {selectedProject && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8">
@@ -172,7 +171,6 @@ export default function Portfolio() {
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
               className="relative w-full max-w-6xl bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col lg:flex-row max-h-[90vh]"
             >
-              {/* Image Gallery */}
               <div className="relative lg:w-2/3 bg-black flex items-center justify-center group/gallery h-[40vh] lg:h-auto">
                 <img
                   key={currentImageIndex}
@@ -182,7 +180,6 @@ export default function Portfolio() {
                   referrerPolicy="no-referrer"
                 />
 
-                {/* Navigation Arrows */}
                 <button
                   onClick={prevImage}
                   className="absolute left-4 p-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-white hover:bg-white/20 transition-all opacity-0 group-hover/gallery:opacity-100"
@@ -196,7 +193,6 @@ export default function Portfolio() {
                   <ChevronRight size={24} />
                 </button>
 
-                {/* Dots */}
                 <div className="absolute bottom-6 flex gap-2">
                   {selectedProject.gallery.map((_, idx) => (
                     <div
@@ -207,7 +203,6 @@ export default function Portfolio() {
                 </div>
               </div>
 
-              {/* Project Info */}
               <div className="lg:w-1/3 p-8 lg:p-12 overflow-y-auto flex flex-col">
                 <div className="flex justify-between items-start mb-8">
                   <div>
