@@ -15,7 +15,7 @@ const projects = [
     id: 1,
     title: "Résidentiel Haut de Gamme",
     location: "Strasbourg",
-    src: "/assets/home1.avif",
+    image: "/assets/home1.avif",
     gallery: ["/assets/home1.avif", "/assets/home11.avif"],
     type: "Résidentiel",
     year: "2023",
