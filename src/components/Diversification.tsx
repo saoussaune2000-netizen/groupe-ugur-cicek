@@ -1,4 +1,3 @@
-import { motion } from "motion/react";
 import { Utensils, ExternalLink } from "lucide-react";
 
 export default function Diversification() {
@@ -7,13 +6,13 @@ export default function Diversification() {
       <div className="max-w-7xl mx-auto">
         <div className="bg-surface rounded-3xl overflow-hidden shadow-xl border border-black/5">
           <div className="grid grid-cols-1 lg:grid-cols-2">
-            {/* Image en premier sur mobile pour un effet visuel fort */}
             <div className="relative h-56 sm:h-72 lg:h-auto lg:order-2">
               <img
                 src="/assets/restaurant.avif"
                 alt="Restaurant Le Cyrano"
                 className="w-full h-full object-cover"
-                referrerPolicy="no-referrer"
+                loading="lazy"
+                decoding="async"
               />
               <div className="absolute inset-0 bg-black/10" />
             </div>
@@ -29,27 +28,28 @@ export default function Diversification() {
               </div>
 
               <h2 className="text-3xl md:text-4xl font-serif mb-5">
-                Le Cyrano :{" "}
-                <span className="italic">L'art de recevoir</span>
+                Le Cyrano : <span className="italic">L'art de recevoir</span>
               </h2>
 
               <p className="text-gray-600 mb-7 leading-relaxed text-sm md:text-base">
-                Parce que l'investissement est aussi une affaire de passion, le Groupe Ugur Cicek s'est diversifié
-                dans le secteur de la restauration avec Le Cyrano. Un lieu d'exception où se mêlent gastronomie
-                et convivialité, reflétant nos valeurs d'excellence.
+                Parce que l'investissement est aussi une affaire de passion, le
+                Groupe Ugur Cicek s'est diversifié dans le secteur de la
+                restauration avec Le Cyrano. Un lieu d'exception où se mêlent
+                gastronomie et convivialité, reflétant nos valeurs d'excellence.
               </p>
 
-              <motion.a
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+              <a
                 href="https://www.lecyrano.fr"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-primary font-bold border-b-2 border-accent pb-1 hover:text-accent transition-colors w-fit text-sm md:text-base"
+                className="inline-flex items-center gap-2 text-primary font-bold border-b-2 border-accent pb-1 hover:text-accent transition-colors duration-300 ease-out w-fit text-sm md:text-base hover:scale-[1.02] active:scale-[0.98] transform"
               >
                 Découvrir le restaurant
-                <ExternalLink size={16} />
-              </motion.a>
+                <ExternalLink
+                  size={16}
+                  className="transition-transform duration-200 group-hover:translate-x-1"
+                />
+              </a>
             </div>
           </div>
         </div>

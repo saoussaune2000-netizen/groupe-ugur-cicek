@@ -2,8 +2,6 @@ import { lazy, Suspense } from "react";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import Footer from "./components/Footer";
-import { motion } from "motion/react";
-import { Toaster } from "react-hot-toast";
 
 const About = lazy(() => import("./components/About"));
 const Services = lazy(() => import("./components/Services"));
@@ -12,29 +10,54 @@ const LeaderMessage = lazy(() => import("./components/LeaderMessage"));
 const Diversification = lazy(() => import("./components/Diversification"));
 const Contact = lazy(() => import("./components/Contact"));
 
+const Toaster = lazy(() =>
+  import("react-hot-toast").then((mod) => ({
+    default: mod.Toaster,
+  })),
+);
+
+function SectionLoader() {
+  return (
+    <div className="flex items-center justify-center py-10">
+      <div className="h-6 w-6 animate-spin rounded-full border-2 border-black border-t-transparent" />
+    </div>
+  );
+}
+
 export default function App() {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen overflow-x-hidden bg-white">
       <Navbar />
-      <Toaster position="top-right" />
+
+      <Suspense fallback={null}>
+        <Toaster position="top-right" />
+      </Suspense>
 
       <main>
         <Hero />
 
-        <Suspense fallback={<div className="text-center py-10">Loading...</div>}>
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1 }}
-          >
-            <About />
-            <Services />
-            <Portfolio />
-            <LeaderMessage />
-            <Diversification />
-            <Contact />
-          </motion.div>
+        <Suspense fallback={<SectionLoader />}>
+          <About />
+        </Suspense>
+
+        <Suspense fallback={<SectionLoader />}>
+          <Services />
+        </Suspense>
+
+        <Suspense fallback={<SectionLoader />}>
+          <Portfolio />
+        </Suspense>
+
+        <Suspense fallback={<SectionLoader />}>
+          <LeaderMessage />
+        </Suspense>
+
+        <Suspense fallback={<SectionLoader />}>
+          <Diversification />
+        </Suspense>
+
+        <Suspense fallback={<SectionLoader />}>
+          <Contact />
         </Suspense>
       </main>
 

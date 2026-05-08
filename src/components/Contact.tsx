@@ -1,4 +1,3 @@
-import { motion } from "motion/react";
 import { Phone, Mail, MapPin, Send } from "lucide-react";
 import emailjs from "@emailjs/browser";
 import { useRef, useState } from "react";
@@ -43,7 +42,6 @@ export default function Contact() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-          {/* Info Side */}
           <div className="lg:col-span-5 space-y-8">
             <div className="premium-card">
               <h3 className="text-2xl font-serif mb-8">Coordonnées</h3>
@@ -162,18 +160,16 @@ export default function Contact() {
                   className="w-full bg-surface border border-black/5 rounded-xl px-4 py-3 focus:outline-none focus:border-accent transition-colors resize-none"
                 ></textarea>
               </div>
-              <motion.button
+              <button
                 type="submit"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="w-full bg-primary text-white py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-accent transition-all duration-300 group"
+                className="w-full bg-primary text-white py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-accent transition-all duration-300 ease-out hover:scale-[1.02] active:scale-[0.98] group"
               >
                 Envoyer le message
                 <Send
                   size={18}
-                  className="group-hover:translate-x-1 transition-transform"
+                  className="group-hover:translate-x-1 transition-transform duration-200"
                 />
-              </motion.button>
+              </button>
             </form>
           </div>
         </div>

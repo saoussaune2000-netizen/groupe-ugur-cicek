@@ -1,16 +1,32 @@
-import { motion } from "motion/react";
+import { useEffect, useRef } from "react";
 
 export default function About() {
+  const textRef = useRef<HTMLDivElement>(null);
+  const imageRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            (entry.target as HTMLElement).style.animationPlayState = "running";
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15 },
+    );
+    if (textRef.current)  observer.observe(textRef.current);
+    if (imageRef.current) observer.observe(imageRef.current);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section id="about" className="section-padding bg-surface">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
+
+          <div ref={textRef} className="about-text">
             <span className="text-accent font-semibold tracking-widest uppercase text-xs mb-4 block">
               Notre Histoire
             </span>
@@ -57,21 +73,23 @@ export default function About() {
                 </div>
               </div>
             </div>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="relative mt-4 lg:mt-0"
-          >
+          <div ref={imageRef} className="about-image relative mt-4 lg:mt-0">
             <div className="aspect-[4/3] md:aspect-[4/4] lg:aspect-[4/5] rounded-2xl overflow-hidden shadow-2xl">
               <img
-                src="/assets/home.avif"
+                src="/assets/home-800.avif"
+                srcSet="
+                  /assets/home-527.avif  527w,
+                  /assets/home-900.avif  900w,
+                  /assets/home-1200.avif 1200w
+                "
+                sizes="(max-width: 768px) 100vw, 50vw"
                 alt="Real Estate Professional"
                 className="w-full h-full object-cover"
-                referrerPolicy="no-referrer"
+                loading="eager"
+                fetchPriority="high"
+                decoding="async"
               />
             </div>
             <div className="absolute -bottom-6 -left-4 md:-left-6 bg-accent p-5 md:p-8 rounded-2xl hidden md:block max-w-xs">
@@ -79,7 +97,8 @@ export default function About() {
                 "L'immobilier est une question de vision et de confiance."
               </p>
             </div>
-          </motion.div>
+          </div>
+
         </div>
       </div>
     </section>

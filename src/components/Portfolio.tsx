@@ -1,5 +1,4 @@
-import { motion, AnimatePresence } from "motion/react";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import type { MouseEvent } from "react";
 import {
   X,
@@ -70,36 +69,52 @@ export default function Portfolio() {
     (typeof projects)[0] | null
   >(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [modalVisible, setModalVisible] = useState(false);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            (entry.target as HTMLElement).style.animationPlayState = "running";
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15 },
+    );
+    cardRefs.current.forEach((el) => el && observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
 
   const openModal = (project: (typeof projects)[0]) => {
     setSelectedProject(project);
     setCurrentImageIndex(0);
     document.body.style.overflow = "hidden";
+    requestAnimationFrame(() => setModalVisible(true));
   };
 
   const closeModal = () => {
-    setSelectedProject(null);
-    document.body.style.overflow = "auto";
+    setModalVisible(false);
+    setTimeout(() => {
+      setSelectedProject(null);
+      document.body.style.overflow = "auto";
+    }, 300);
   };
 
   const nextImage = (e: MouseEvent) => {
     e.stopPropagation();
-    if (selectedProject) {
-      setCurrentImageIndex(
-        (prev) => (prev + 1) % selectedProject.gallery.length,
-      );
-    }
+    if (selectedProject)
+      setCurrentImageIndex((p) => (p + 1) % selectedProject.gallery.length);
   };
 
   const prevImage = (e: MouseEvent) => {
     e.stopPropagation();
-    if (selectedProject) {
+    if (selectedProject)
       setCurrentImageIndex(
-        (prev) =>
-          (prev - 1 + selectedProject.gallery.length) %
-          selectedProject.gallery.length,
+        (p) => (p - 1 + selectedProject.gallery.length) % selectedProject.gallery.length,
       );
-    }
   };
 
   return (
@@ -124,20 +139,25 @@ export default function Portfolio() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {projects.map((project, index) => (
-            <motion.div
+            <div
               key={project.title}
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="relative group overflow-hidden rounded-2xl aspect-[16/10] cursor-pointer"
+              ref={(el) => (cardRefs.current[index] = el)}
+              className="portfolio-card relative group overflow-hidden rounded-2xl aspect-[16/10] cursor-pointer"
+              style={{ "--delay": `${index * 0.1}s` } as React.CSSProperties}
               onClick={() => openModal(project)}
             >
               <img
-                src={project.image}
+                src={project.image.replace(".avif", "-800.avif")}
+                srcSet={`
+                  ${project.image.replace(".avif", "-527.avif")} 527w,
+                  ${project.image.replace(".avif", "-800.avif")} 800w,
+                  ${project.image.replace(".avif", "-1200.avif")} 1200w
+                `}
+                sizes="(max-width: 768px) 100vw, 50vw"
                 alt={project.title}
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                referrerPolicy="no-referrer"
+                loading="lazy"
+                decoding="async"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 transition-opacity group-hover:opacity-80" />
 
@@ -150,121 +170,109 @@ export default function Portfolio() {
                 </h3>
                 <p className="text-white/60 text-sm">{project.location}</p>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
 
-      <AnimatePresence>
-        {selectedProject && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={closeModal}
-              className="absolute inset-0 bg-black/90 backdrop-blur-md"
-            />
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="relative w-full max-w-6xl bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col lg:flex-row max-h-[90vh]"
-            >
-              <div className="relative lg:w-2/3 bg-black flex items-center justify-center group/gallery h-[40vh] lg:h-auto">
-                <img
-                  key={currentImageIndex}
-                  src={selectedProject.gallery[currentImageIndex]}
-                  alt={selectedProject.title}
-                  className="w-full h-full object-cover"
-                  referrerPolicy="no-referrer"
-                />
+      {selectedProject && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8">
+          <div
+            className={`modal-backdrop absolute inset-0 bg-black/90 backdrop-blur-md ${modalVisible ? "modal-backdrop--in" : "modal-backdrop--out"}`}
+            onClick={closeModal}
+          />
+          <div
+            className={`modal-panel relative w-full max-w-6xl bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col lg:flex-row max-h-[90vh] ${modalVisible ? "modal-panel--in" : "modal-panel--out"}`}
+          >
+            <div className="relative lg:w-2/3 bg-black flex items-center justify-center group/gallery h-[40vh] lg:h-auto">
+              <img
+                key={currentImageIndex}
+                src={selectedProject.gallery[currentImageIndex]}
+                alt={selectedProject.title}
+                className="modal-img w-full h-full object-cover"
+                referrerPolicy="no-referrer"
+              />
 
-                <button
-                  onClick={prevImage}
-                  className="absolute left-4 p-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-white hover:bg-white/20 transition-all opacity-0 group-hover/gallery:opacity-100"
-                >
-                  <ChevronLeft size={24} />
-                </button>
-                <button
-                  onClick={nextImage}
-                  className="absolute right-4 p-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-white hover:bg-white/20 transition-all opacity-0 group-hover/gallery:opacity-100"
-                >
-                  <ChevronRight size={24} />
-                </button>
+              <button
+                onClick={prevImage}
+                className="absolute left-4 p-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-white hover:bg-white/20 transition-all opacity-0 group-hover/gallery:opacity-100"
+              >
+                <ChevronLeft size={24} />
+              </button>
+              <button
+                onClick={nextImage}
+                className="absolute right-4 p-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-white hover:bg-white/20 transition-all opacity-0 group-hover/gallery:opacity-100"
+              >
+                <ChevronRight size={24} />
+              </button>
 
-                <div className="absolute bottom-6 flex gap-2">
-                  {selectedProject.gallery.map((_, idx) => (
-                    <div
-                      key={idx}
-                      className={`w-2 h-2 rounded-full transition-all ${idx === currentImageIndex ? "bg-accent w-6" : "bg-white/40"}`}
-                    />
-                  ))}
+              <div className="absolute bottom-6 flex gap-2">
+                {selectedProject.gallery.map((_, idx) => (
+                  <div
+                    key={idx}
+                    className={`h-2 rounded-full transition-all duration-300 ${idx === currentImageIndex ? "bg-accent w-6" : "bg-white/40 w-2"}`}
+                  />
+                ))}
+              </div>
+            </div>
+
+            <div className="lg:w-1/3 p-8 lg:p-12 overflow-y-auto flex flex-col">
+              <div className="flex justify-between items-start mb-8">
+                <div>
+                  <span className="text-accent text-sm font-semibold uppercase tracking-widest mb-2 block">
+                    {selectedProject.type}
+                  </span>
+                  <h2 className="text-3xl font-serif font-bold text-primary">
+                    {selectedProject.title}
+                  </h2>
+                </div>
+                <button
+                  onClick={closeModal}
+                  className="p-2 hover:bg-surface rounded-full transition-colors"
+                >
+                  <X size={24} />
+                </button>
+              </div>
+
+              <div className="space-y-6 mb-10">
+                <div className="flex items-center gap-4 text-gray-700">
+                  <MapPin size={20} className="text-accent" />
+                  <span className="text-sm">{selectedProject.location}</span>
+                </div>
+                <div className="flex items-center gap-4 text-gray-700">
+                  <Calendar size={20} className="text-accent" />
+                  <span className="text-sm">Réalisation : {selectedProject.year}</span>
+                </div>
+                <div className="flex items-center gap-4 text-gray-700">
+                  <Building2 size={20} className="text-accent" />
+                  <span className="text-sm">Type : {selectedProject.type}</span>
                 </div>
               </div>
 
-              <div className="lg:w-1/3 p-8 lg:p-12 overflow-y-auto flex flex-col">
-                <div className="flex justify-between items-start mb-8">
-                  <div>
-                    <span className="text-accent text-sm font-semibold uppercase tracking-widest mb-2 block">
-                      {selectedProject.type}
-                    </span>
-                    <h2 className="text-3xl font-serif font-bold text-primary">
-                      {selectedProject.title}
-                    </h2>
-                  </div>
-                  <button
-                    onClick={closeModal}
-                    className="p-2 hover:bg-surface rounded-full transition-colors"
-                  >
-                    <X size={24} />
-                  </button>
-                </div>
-
-                <div className="space-y-6 mb-10">
-                  <div className="flex items-center gap-4 text-gray-700">
-                    <MapPin size={20} className="text-accent" />
-                    <span className="text-sm">{selectedProject.location}</span>
-                  </div>
-                  <div className="flex items-center gap-4 text-gray-700">
-                    <Calendar size={20} className="text-accent" />
-                    <span className="text-sm">
-                      Réalisation : {selectedProject.year}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-4 text-gray-700">
-                    <Building2 size={20} className="text-accent" />
-                    <span className="text-sm">
-                      Type : {selectedProject.type}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="prose prose-slate prose-sm max-w-none">
-                  <h4 className="text-primary font-serif font-bold mb-4">
-                    Description du projet
-                  </h4>
-                  <p className="text-gray-600 leading-relaxed">
-                    {selectedProject.description}
-                  </p>
-                </div>
-
-                <div className="mt-auto pt-10">
-                  <button
-                    onClick={() => {
-                      closeModal();
-                      window.location.href = "#contact";
-                    }}
-                    className="w-full bg-accent hover:bg-accent-dark text-white py-4 rounded-xl font-bold hover:bg-accent/90 transition-all"
-                  >
-                    Investir dans un projet similaire
-                  </button>
-                </div>
+              <div className="prose prose-slate prose-sm max-w-none">
+                <h4 className="text-primary font-serif font-bold mb-4">
+                  Description du projet
+                </h4>
+                <p className="text-gray-600 leading-relaxed">
+                  {selectedProject.description}
+                </p>
               </div>
-            </motion.div>
+
+              <div className="mt-auto pt-10">
+                <button
+                  onClick={() => {
+                    closeModal();
+                    window.location.href = "#contact";
+                  }}
+                  className="w-full bg-accent hover:bg-accent-dark text-white py-4 rounded-xl font-bold hover:bg-accent/90 transition-all"
+                >
+                  Investir dans un projet similaire
+                </button>
+              </div>
+            </div>
           </div>
-        )}
-      </AnimatePresence>
+        </div>
+      )}
     </section>
   );
 }

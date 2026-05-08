@@ -1,4 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap");
 @import "tailwindcss";
 
 @theme {
@@ -34,4 +33,182 @@
   @apply bg-card border border-primary/15 rounded-2xl p-8
          shadow-sm transition-all duration-300
          hover:shadow-lg hover:border-primary/30 hover:-translate-y-1;
+}
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/Inter.woff2") format("woff2");
+  font-display: swap;
+  font-weight: 100 900;
+  font-style: normal;
+}
+
+
+/* ── Hero ── */
+
+@keyframes heroIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-hero-in {
+  animation: heroIn 0.8s ease-out forwards;
+}
+
+@keyframes scrollBounce {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translateY(10px);
+    opacity: 1;
+  }
+}
+
+.animate-scroll-bounce {
+  animation: scrollBounce 2s infinite ease-in-out;
+}
+
+
+/* ── Portfolio ── */
+
+
+@keyframes portfolio-card-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.portfolio-card {
+  opacity: 0;
+  animation: portfolio-card-in 0.6s ease-out var(--delay, 0s) forwards;
+  animation-play-state: paused; 
+}
+
+@keyframes backdrop-in  { from { opacity: 0; } to { opacity: 1; } }
+@keyframes backdrop-out { from { opacity: 1; } to { opacity: 0; } }
+
+.modal-backdrop--in  { animation: backdrop-in  0.25s ease forwards; }
+.modal-backdrop--out { animation: backdrop-out 0.25s ease forwards; }
+
+@keyframes panel-in {
+  from { opacity: 0; transform: scale(0.9) translateY(20px); }
+  to   { opacity: 1; transform: scale(1)   translateY(0); }
+}
+@keyframes panel-out {
+  from { opacity: 1; transform: scale(1)   translateY(0); }
+  to   { opacity: 0; transform: scale(0.9) translateY(20px); }
+}
+
+.modal-panel--in  { animation: panel-in  0.3s ease forwards; }
+.modal-panel--out { animation: panel-out 0.3s ease forwards; }
+
+@keyframes img-fade { from { opacity: 0; } to { opacity: 1; } }
+
+.modal-img { animation: img-fade 0.25s ease forwards; }
+
+
+
+/* ── About ── */
+
+
+@keyframes about-text-in {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.about-text {
+  opacity: 0;
+  animation: about-text-in 0.6s ease-out forwards;
+  animation-play-state: paused;
+}
+
+@keyframes about-image-in {
+  from { opacity: 0; transform: scale(0.9); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.about-image {
+  opacity: 0;
+  animation: about-image-in 0.8s ease-out forwards;
+  animation-play-state: paused;
+}
+
+/* ── LeaderMessage ── */
+
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+
+
+
+/* Legal Modal */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modalIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.2s ease-out forwards;
+}
+
+.animate-modalIn {
+  animation: modalIn 0.25s ease-out forwards;
+}
+
+
+
+@keyframes menuSlide {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-menuSlide {
+  animation: menuSlide 0.25s ease-out forwards;
 }
